@@ -1,0 +1,27 @@
+# Create a clean .gitignore file
+@"
+# Environment files
+.env
+.env.*
+
+# SSH keys
+id_rsa*
+*.ppk
+
+# Specific files with sensitive data
+chatgpt.py
+
+# Custom project folders
+/start/
+start/
+
+# Node modules
+node_modules/
+
+# Visual Studio files
+.vs/
+[Bb]in/
+[Oo]bj/
+*.suo
+*.user
+"@ | Out-File -FilePath .gitignore -Force -Encoding utf8

@@ -1,0 +1,45 @@
+/* Universal icon styling */
+.icon,
+.sidebar-icon {
+  display: inline-block;
+  width: 24px;  /* Change this value to control width globally */
+  height: 24px; /* Change this value to control height globally */
+}
+
+/* (Optionally add any additional rules if needed.)
+   For example, if you want the SVG graphics to inherit the current text color: */
+.icon use,
+.sidebar-icon use {
+  fill: currentColor;
+}
+
+/* Remove the background-image rules since icons are now loaded via the SVG sprite */
+
+
+/* Copy icon styling for response copy functionality */
+.copy-icon {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    margin-top: 3px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    color: gray;
+    opacity: 0;
+}
+  
+  .copy-icon:hover {
+    opacity: 1;
+  }
+  
+  /* Ensure that the copy! icon appears when hovering over the tweet container!!!*/
+  .tweet:hover .copy-icon {
+    display: block;
+    opacity: 0.7;
+  }
+
+/* Ensure the newest tweet always shows the copy icon at opacity 0.7 */
+.tweet.last .copy-icon {
+  opacity: 0.7;
+}
+

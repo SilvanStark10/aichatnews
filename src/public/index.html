@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, height=device-height">
+    <title>Tensola</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <link rel="icon" href="src/public/styles/icon.png" type="image/png">
+    <script src="src/ip.js?=v28239706"></script>
+    <!-- Link the external CSS file using file modification time for  cache busting -->
+    <link rel="stylesheet" href="src/public/styles/styles.css?v=28239706">
+    <link rel="stylesheet" href="src/public/styles/icons.css?v=28239706">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <style>
+        @media (max-width: 599px) {
+            .mobile-bottom-nav {
+                display: none !important;
+                justify-content: space-around;
+                align-items: center;
+                padding: 5px 0;
+                background-color: white;
+                border-top: 1px solid #e5e7eb;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 1001;
+            }
+            /* Show the fixed search container on mobile by default */
+            .fixed-search-container {
+                display: block;
+            }
+            
+            /* Hide discover icon, notification icon and login button on mobile */
+            .mobile-top-nav .icon-discover,
+            .mobile-top-nav .icon-notifications {
+                display: none;
+            }
+            
+            #login-text {
+                display: none !important;
+            }
+        }
+        /* Define a state where the mobile search container is active */
+        .fixed-search-container.active {
+            display: block !important;
+        }
+        
+        /* Hide the mobile bottom nav when search is active */
+        .mobile-bottom-nav.hidden {
+            display: none !important;
+        }
+        
+        /* Show the back arrow when active */
+        #mobile-back-arrow.active {
+            display: block !important;
+        }
+        /* Add these styles to ensure More button stays at the bottom */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        #chat-buttons-container {
+            flex: 1;
+        }
+        #more-button-container {
+            margin-top: auto;
+        }
+        
+        /* Rotate the More icon by 90 degrees */
+        .icon-more {
+            transform: rotate(90deg);
+        }
+    </style>
+
+    <!-- Preload tweets early -->
+    <script>
+        (function() {
+            function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(';').shift();
+            }
+            // Build the URL without the unnecessary chat_id parameter.
+            var sessionId = getCookie('user_session_id');
+            var url = 'https://goldpluto.com/api/app/requestposts' + (sessionId ? ('?session_id=' + sessionId) : '');
+            fetch(url)
+                .then(function(response) { return response.json(); })
+                .then(function(data) {
+                    // Store the prefetched tweets globally
+                    window.preFetchedTweets = data;
+                })
+                .catch(function(error) { console.error('Error preloading tweets:', error); });
+        })();
+    </script>
+</head>
+<body>
+    <!-- Removed Desktop header controls from here -->
+
+    <!-- Layout container with Sidebar and Main Column. -->
+    <div class="layout">
+        <div class="sidebar">
+            <!-- Insert Desktop header controls here so they appeara on the left -->
+            <div class="desktop-header-controls">
+                <!-- Toggle Sidebar with Secret Icon. -->
+                <button class="sidebar-button keep-visible" onclick="toggleSidebar()">
+                    <svg class="sidebar-icon secret">
+                        <use style="fill: #0285ff" xlink:href="src/public/styles/icons.svg#secret"></use>
+                    </svg>
+                </button>
+                <!-- Create New Chat Button -->
+                <button style="margin: 0; padding:0" class="sidebar-button keep-visible new-chat-button" onclick="createNewChat()">
+                    <svg style="margin: 0; padding:0" class="sidebar-icon icon-new-chat">
+                        <use xlink:href="src/public/styles/icons.svg#icon-new-chat"></use>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile header controls; visible only on devices below 600px -->
+            <div class="mobile-header-controls">
+            </div>
+
+            <!-- Collapsible content put flex inside-->
+            <div id="sidebar-content" style="flex-direction: column;">
+                <button class="sidebar-button" onclick="switchChat(15)">
+                    <svg class="sidebar-icon icon-search">
+                        <use xlink:href="src/public/styles/icons.svg#icon-search"></use>
+                    </svg>
+                    <span>Search</span>
+                </button>
+                <button class="sidebar-button" onclick="switchChat(19)">
+                    <svg class="sidebar-icon icon-for-you">
+                        <use xlink:href="src/public/styles/icons.svg#icon-for-you"></use>
+                    </svg>
+                    <span>For You</span>
+                </button>
+                <button class="sidebar-button" onclick="switchChat(16)">
+                    <svg class="sidebar-icon icon-discover">
+                        <use xlink:href="src/public/styles/icons.svg#icon-discover"></use>
+                    </svg>
+                    <span>Discover</span>
+                </button>
+                <button class="sidebar-button" onclick="switchChat(17)">
+                    <svg class="sidebar-icon icon-direct">
+                        <use xlink:href="src/public/styles/icons.svg#icon-direct"></use>
+                    </svg>
+                    <span>Inbox</span>
+                </button>
+                <button class="sidebar-button" onclick="switchChat(18)">
+                    <svg class="sidebar-icon icon-favorites">
+                        <use xlink:href="src/public/styles/icons.svg#icon-favorites"></use>
+                    </svg>
+                    <span>Favorites</span>
+                </button>
+                <button class="sidebar-button" onclick="switchChat(3)">
+                    <svg class="sidebar-icon icon-create">
+                        <use xlink:href="src/public/styles/icons.svg#icon-create"></use>
+                    </svg>
+                    <span>Create</span>
+
+                </button>
+                <button class="sidebar-button" onclick="switchChatNotifications()">
+                    <svg class="sidebar-icon icon-notifications">
+                        <use xlink:href="src/public/styles/icons.svg#icon-notifications"></use>
+                    </svg>
+                    <span>News</span>
+                </button>
+                <button class="sidebar-button" onclick="switchChat(10)" id="settings-button">
+                    <svg class="sidebar-icon icon-settings">
+                        <use xlink:href="src/public/styles/icons.svg#icon-settings"></use>
+                    </svg>
+                    <span>Settings</span>
+                </button>
+                <button class="sidebar-button" onclick="switchChatProfile()">
+                    <svg class="sidebar-icon icon-profile">
+                        <use xlink:href="src/public/styles/icons.svg#icon-profile"></use>
+                    </svg>
+                    <span>Profile</span>
+                </button>
+                <div style="height: 1px; margin-left:7px; margin-top: 10px; margin-bottom:10px; background-color:#e5e7eb; width: 65%;"></div>
+            </div>
+
+            <div id="chat-buttons-container" style="display: none; flex-direction: column;">
+                <!-- Dynamic chat buttons appended here -->
+            </div>
+
+            <!-- New sticky more button container -->
+            <div id="more-button-container" style="display: none; margin-top: auto; position: sticky; bottom: 0; background-color: #f9f9f9; padding-top: 10px; padding-bottom: 10px;">
+                <button class="sidebar-button" onclick="toggleSettings()" id="more-button">
+                    <svg class="sidebar-icon icon-more">
+                        <use xlink:href="src/public/styles/icons.svg#icon-more"></use>
+                    </svg>
+                    <span>Mehr</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- New main column for navigation + main content -->
+        <div class="main-column">
+            <!-- Navigation from desktop (moved here above the main content) -->
+            <div class="navigation">
+                <div id="user-info" style="display: none;">
+                    <div id="user-icon" onclick="toggleUserInfo()" style="display: none;">D</div>
+                    <div id="user-full-name" style="display: none;">
+                        <span id="user-name"></span>
+                        <p><a id="logout" href="#" onclick="logout()">Logout</a></p>
+                    </div>
+                </div>
+                <div id="login-text" style="text-align: right; display: none;">
+                    <a href="https://goldpluto.com/start" style="text-decoration: none; color: rgb(255, 255, 255); display: inline-block; width: 100%; padding: 5px 10px 7px 10px; background-color: rgb(45, 65, 255); border-radius: 5px; text-align: center; margin:0px">
+                        Anmelden
+                    </a>
+                </div>
+            </div>
+
+            <!-- Main content container for tweets and app -->
+            <div class="main-content">
+                <div id="root"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add this section to display cookies -->
+    <div id="cookie-display" style="display: none; position: fixed; bottom: 10px; right: 10px; background-color: white; border: 1px solid #ccc; padding: 10px; z-index: 1000;">
+        <h4>Cookies</h4>
+        <p id="user_session_id"></p>
+        <p id="saves_your_work"></p>
+    </div>
+
+    <!-- Mobile Top Navigation -->
+    <div class="mobile-top-nav">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <!-- Hamburger Menu -->
+            <button class="mobile-button hamburger-menu" onclick="toggleSidebar()">
+                <div class="x9f619 xjbqb8w x78zum5 x168nmei x13lgxp2 x5pf9jr xo71vjh x1n2onr6 x1plvlek xryxfnj x1c4vz4f x2lah0s xdt5ytf xqjyukv x1qjc9v5">
+                    <div class="x9f619 xxk0z11 xii2z7h x11xpdln x19c4wfv xvy4d1p">
+                        <svg aria-label="Einstellungen" class="mobile-icon x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
+                            <title>Einstellungen</title>
+                            <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="3" x2="21" y1="4" y2="4"></line>
+                            <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="3" x2="21" y1="12" y2="12"></line>
+                            <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="3" x2="21" y1="20" y2="20"></line>
+                        </svg>
+                    </div>
+                </div>
+            </button>
+            <!-- Back Arrow Button (initially hidden) -->
+            <button id="mobile-back-arrow" class="mobile-button" style="display: none;" onclick="hideMobileSearch()">
+                <svg class="icon icon-back" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <title>Back</title>
+                    <path d="M15 18l-6-6 6-6"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="mobile-chat-name" id="mobile-chat-name" style="flex: 1; text-align: center; font-size: 18px; font-weight: 600; color: black;"></div>
+        <div style="display: flex; gap: 10px;">
+            <!-- Discover Button -->
+            <button class="mobile-button" onclick="switchChat(16)">
+                <svg class="icon icon-discover">
+                    <use xlink:href="src/public/styles/icons.svg#icon-discover"></use>
+                </svg>
+            </button>
+            <!-- Bell Icon Button -->
+            <button class="mobile-button" onclick="switchChat(18)">
+                <svg class="icon icon-notifications">
+                    <use xlink:href="src/public/styles/icons.svg#icon-notifications"></use>
+                </svg>
+            </button>
+            <!-- Search Button: triggers mobile search mode -->
+            <button class="mobile-button" onclick="showMobileSearch()">
+                <svg class="icon icon-new-chat">
+                    <use xlink:href="src/public/styles/icons.svg#icon-new-chat"></use>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Bottom Navigation -->
+    <div class="mobile-bottom-nav">
+        <!-- For You -->
+        <a href="#" class="mobile-button" onclick="switchChat(19)">
+            <svg class="icon icon-for-you">
+                <use xlink:href="src/public/styles/icons.svg#icon-for-you"></use>
+            </svg>
+            <span>For You</span>
+        </a>
+
+        <!-- New Chat -->
+        <a href="#" class="mobile-button" onclick="showMobileSearch()">
+            <svg class="icon icon-new-chat">
+                <use xlink:href="src/public/styles/icons.svg#icon-new-chat"></use>
+            </svg>
+            <span>New Chat</span>
+        </a>
+
+        <!-- Create (Center) -->
+        <a href="#" class="mobile-button" onclick="switchChat(10)">
+            <svg class="icon icon-create">
+                <use xlink:href="src/public/styles/icons.svg#icon-create"></use>
+            </svg>
+            <span>Create</span>
+        </a>
+
+        <!-- Inbox -->
+        <a href="#" class="mobile-button" onclick="switchChat(17)">
+            <svg class="icon icon-direct">
+                <use xlink:href="src/public/styles/icons.svg#icon-direct"></use>
+            </svg>
+            <span>Inbox</span>
+        </a>
+
+        <!-- Profile -->
+        <a href="#" class="mobile-button" onclick="switchChatProfile()">
+            <svg class="icon icon-profile">
+                <use xlink:href="src/public/styles/icons.svg#icon-profile"></use>
+            </svg>
+            <span>Profile</span>
+        </a>
+    </div>
+
+    <!-- Adjust main content padding for mobile fixed navs -->
+    <style>
+        @media (max-width: 599px) {
+            .main-content {
+                padding-top: 55px; /* Increased from 30px to 55px */
+                padding-bottom: 30px; /* Height of bottom nav */
+            }
+        }
+    </style>
+
+    <!-- Modified Chat Overlay: set top to 50px, width to 80%, and height to fill below nav -->
+    <div id="chat-overlay" style="display: none; position: fixed; top: 45px; left: 0; width: 80%; height: calc(100% - 50px); background-color: white; z-index: 9999; overflow-y: auto;">
+        <div id="chat-overlay-inner" style="padding: 20px;">
+            <h2 style="margin-bottom: 20px;">Chats</h2>
+            <div id="chat-overlay-buttons" style="display: flex; flex-direction: column;"></div>
+        </div>
+    </div>
+
+    <!-- New Mehr popup -->
+    <div id="mehr-popup" style="display: none; position: absolute; bottom: 45px; left: 5px; background-color: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); padding: 10px; z-index: 1002; min-width: 150px;">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+            <a href="https://goldpluto.com/impressum" style="text-decoration: none; color: #333; font-size: 16px; padding: 5px;">Impressum</a>
+            <a href="https://goldpluto.com/datenschutz" style="text-decoration: none; color: #333; font-size: 16px; padding: 5px;">Datenschutz</a>
+        </div>
+    </div>
+
+    <!-- Load UI helper functions (non‐React code) -->
+    <script src="src/ui.js?v=28239706"></script>
+    <!-- Load the React application (which itself imports our other components) -->
+    <script type="module" src="src/main.js"></script>
+
+    <script>
+        // Updated user-info logic that will be used in both index.html and ui.js
+
+        fetch("https://goldpluto.com/api/account/userinfo", {
+            method: "GET",
+            credentials: "include" // Include cookies in the request
+        })
+            .then(response => response.json())
+            .then(data => {
+                const userIcon = document.getElementById("user-icon");
+                const userFullName = document.getElementById("user-full-name");
+                const userNameSpan = document.getElementById("user-name");
+
+                if (data.logged_in) {
+                    userIcon.textContent = data.first_name.charAt(0).toUpperCase();
+                    userNameSpan.textContent = `${data.first_name} ${data.last_name}`;
+                    userIcon.style.display = "flex";
+                    userIcon.onclick = () => {
+                        userFullName.style.display = userFullName.style.display === 'none' ? 'block' : 'none';
+                    };
+                    document.getElementById("user-info").style.display = "block";
+                    document.getElementById("login-text").style.display = "none";
+                } else {
+                    document.getElementById("login-text").style.display = "block";
+                }
+            })
+            .catch(error => console.error("Error fetching user info:", error));
+
+        function toggleUserInfo() {
+            const userFullName = document.getElementById("user-full-name");
+            userFullName.style.display = userFullName.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function logout() {
+            // Clear the cookies and reload the page
+            document.cookie = "user_session_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "saves_your_work=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            location.reload();
+        }
+
+        function displayCookies() {
+            const userSessionId = getCookie("user_session_id");
+            const savesYourWork = getCookie("saves_your_work");
+
+            document.getElementById("user_session_id").textContent = `user_session_id: ${userSessionId || "Not set"}`;
+            document.getElementById("saves_your_work").textContent = `saves_your_work: ${savesYourWork || "Not set"}`;
+        }
+
+        window.addEventListener("DOMContentLoaded", displayCookies);
+
+        function toggleSidebar() {
+            const sidebarContent = document.getElementById("sidebar-content");
+            const chatButtonsContainer = document.getElementById("chat-buttons-container");
+            const moreButtonContainer = document.getElementById("more-button-container");
+            const desktopHeaderControls = document.querySelector(".desktop-header-controls");
+            const sidebar = document.querySelector(".sidebar");
+            const isVisible = chatButtonsContainer && chatButtonsContainer.style.display !== "none";
+            
+            if (isVisible) {
+                // Keep sidebar content hidden
+                if (sidebarContent) sidebarContent.style.display = "none";
+                if (chatButtonsContainer) chatButtonsContainer.style.display = "none";
+                if (moreButtonContainer) moreButtonContainer.style.display = "none";
+                if (desktopHeaderControls) desktopHeaderControls.style.backgroundColor = "white";
+                if (sidebar) sidebar.style.backgroundColor = "white";
+            } else {
+                // Don't change sidebar content display, but show chat buttons
+                // sidebarContent will remain hidden with display: none
+                if (chatButtonsContainer) chatButtonsContainer.style.display = "flex";
+                if (moreButtonContainer) moreButtonContainer.style.display = "flex";
+                if (desktopHeaderControls) desktopHeaderControls.style.backgroundColor = "#f9f9f9";
+                if (sidebar) sidebar.style.backgroundColor = "#f9f9f9";
+            }
+            window.dispatchEvent(new Event("resize"));
+        }
+
+        function toggleSettings() {
+            const settingsButton = document.getElementById("settings-button");
+            const moreButton = document.getElementById("more-button");
+            const mehrPopup = document.getElementById("mehr-popup");
+            
+            if (mehrPopup) {
+                if (mehrPopup.style.display === "none") {
+                    mehrPopup.style.display = "block";
+                    
+                    // Event listener for mouse movements
+                    const handleMouseMove = (e) => {
+                        const moreButtonRect = moreButton.getBoundingClientRect();
+                        const sidebarRect = document.querySelector(".sidebar").getBoundingClientRect();
+                        
+                        // Calculate distance from More button
+                        const dx = e.clientX - (moreButtonRect.left + moreButtonRect.width/2);
+                        const dy = e.clientY - (moreButtonRect.top + moreButtonRect.height/2);
+                        const distance = Math.sqrt(dx*dx + dy*dy);
+                        
+                        // Close popup if mouse is outside sidebar or 50px away from More icon
+                        if (e.clientX < sidebarRect.left || e.clientX > sidebarRect.right || 
+                            e.clientY < sidebarRect.top || e.clientY > sidebarRect.bottom ||
+                            distance > 350) {
+                            mehrPopup.style.display = "none";
+                            document.removeEventListener("mousemove", handleMouseMove);
+                        }
+                    };
+                    
+                    document.addEventListener("mousemove", handleMouseMove);
+                } else {
+                    mehrPopup.style.display = "none";
+                    document.removeEventListener("mousemove", handleMouseMove);
+                }
+            }
+            
+            if (settingsButton) settingsButton.classList.toggle("visible");
+        }
+    </script>
+</body>
+</html>

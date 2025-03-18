@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: ui-sans-serif, -apple-system, system-ui, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            margin: 0;
+            background-color: white; /* Optional: Set background color */
+        }
+        .login-container {
+            text-align: center;
+            width: 90%; /* Responsive width */
+            max-width: 400px; /* Maximum width for larger screens */
+            margin-top: 10px; /* Margin from the top of the screen */
+        }
+        .input-field {
+            margin: 10px 0;
+        }
+        input {
+            width: 100%; /* Full width for input fields */
+            padding: 12px; /* Increased padding for larger size */
+            font-size: 26px; /* Decreased font size for input fields */
+            border: 0.7px solid #e5e7eb; /* Border style from index.html */
+            border-radius: 5px; /* Rounded corners */
+        }
+        .cta-button {
+            width: 100%;
+            background-color: rgb(45, 65, 255);
+            color: white;
+            border: none;
+            padding: 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 28px;
+            margin-bottom: 7px;
+        }
+        .create-account-button,
+        #register-next-button {
+            background-color: #42b72a;
+        }
+        .forgot-password, .create-account, .login-link {
+            color: rgb(53, 53, 53); /* Make links gray */
+            text-decoration: none;
+            
+        }
+        .create-account {
+            color: gray; /* Default gray color */
+            font-size: 16px; /* Increased font size for desktop */
+        }
+        @media (max-width: 600px) {
+            input, .cta-button {
+                font-size: 20px; /* Increased font size for mobile */
+                padding: 10px; /* Adjust padding for mobile */
+            }
+            .create-account {
+                font-size: 18px; /* Increased font size for mobile */
+            }
+        }
+        @media (min-width: 601px) and (max-width: 900px) {
+            input, .cta-button {
+                font-size: 22px; /* Increased font size for tablets */
+                padding: 11px; /* Adjust padding for tablets */
+            }
+            .create-account {
+                font-size: 17px; /* Increased font size for tablets */
+            }
+        }
+        .register-container {
+            text-align: center;
+            width: 90%; /* Responsive width */
+            max-width: 400px; /* Maximum width for larger screens */
+            margin-top: 10px; /* Margin from the top of the screen */
+        }
+        .forgot-password-space {
+            margin: 10px 0; /* Added top and bottom margin */
+        }
+        .forgot-password {
+            
+            text-align: left; /* Align text to the left */
+            font-size: 16px; /* Increased font size for desktop */
+        }
+        @media (max-width: 600px) {
+            .forgot-password {
+                font-size: 14px; /* Increased font size for mobile */
+            }
+        }
+        @media (min-width: 601px) and (max-width: 900px) {
+            .forgot-password {
+                font-size: 15px; /* Increased font size for tablets */
+            }
+        }
+        .login-link {
+            font-size: 16px; /* Increased font size for desktop */
+        }
+        @media (max-width: 600px) {
+            .login-link {
+                font-size: 18px; /* Increased font size for mobile */
+            }
+        }
+        @media (min-width: 601px) and (max-width: 900px) {
+            .login-link {
+                font-size: 17px; /* Increased font size for tablets */
+            }
+        }
+        .create-account-text {
+            margin-top: 15px; /* Margin for create account text */
+        }
+        .login-link-text {
+            margin-top: 15px; /* Margin for login link text */
+        }
+        .first-time {
+            color: gray;
+            cursor: pointer; /* Change cursor to pointer on hover */
+        }
+        .create-account-link {
+            color: #003bfc;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .create-account-link:hover {
+            text-decoration: underline;
+        }
+        .error-message {
+            color: red;
+            font-size: 16px; /* Same size as forgot password */
+            margin-top: 5px;
+            text-align: left; /* Align text to the left */
+        }
+        .input-error {
+            border-color: red;
+        }
+        .back-arrow {
+            text-align: left;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .back-arrow i {
+            cursor: pointer;
+            font-size: 20px; /* Adjust size as needed */
+            color: #666; /* Adjust color as needed */
+        }
+        .forgot-password-link-container {
+            margin: 13px 0;
+            text-align: center;
+        }
+        .forgot-password-link {
+            color: #386eff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .forgot-password-link:hover {
+            text-decoration: underline;
+        }
+        .login-link-text, .login-link {
+            font-size: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .login-link-text, .login-link {
+                font-size: 14px;
+            }
+        }
+
+        @media (min-width: 601px) and (max-width: 900px) {
+            .login-link-text, .login-link {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container" style="display: block;">
+        <form id="login-form" novalidate>
+            <!-- Step 1: Email -->
+            <div class="input-field" id="step-email">
+                <input type="email" name="email" placeholder="E-Mail" required autocomplete="email">
+            </div>
+
+            <!-- Step 2: Password (hidden initially) -->
+            <div class="input-field" id="step-password" style="display: none;">
+                <div class="back-arrow">
+                    <i class="fas fa-arrow-left" id="login-back-arrow"></i>
+                </div>
+                <input type="password" name="password" placeholder="Passwort" required autocomplete="current-password">
+            </div>
+
+            <!-- Submit button changed to handle steps -->
+            <button type="button" class="cta-button" id="next-button">Weiter</button>
+            
+            <p class="forgot-password-link-container">
+                <a href="#" style="display: none;" class="forgot-password-link">Forgot Password?</a>
+            </p>
+            <p style="border-top: 0.5px solid rgba(131, 131, 131, 0.466); margin-top: 18px; margin-bottom:11px;"></p>
+            <button type="button" style="margin-top: 7px;" class="cta-button create-account-button">Account erstellen</button>
+        </form>
+    </div>
+
+    <!-- Add the register form, hidden initially! -->
+    <div class="register-container" style="display: none;">
+        <form id="register-form" novalidate>
+            <!-- Step 1: First Name -->
+            <div class="input-field" id="register-step-first-name">
+                <input type="text" name="first_name" placeholder="Vorname" required autocomplete="given-name">
+            </div>
+
+            <!-- Step 2: Last Name -->
+            <div class="input-field" id="register-step-last-name">
+                <input type="text" name="last_name" placeholder="Nachname" required autocomplete="family-name">
+            </div>
+
+            <!-- Step 3: Email (hidden initially) -->
+            <div class="input-field" id="register-step-email" style="display: none;">
+                <div class="back-arrow">
+                    <i class="fas fa-arrow-left" id="register-back-arrow"></i>
+                </div>
+                <input type="email" name="register-email" placeholder="E-Mail" required autocomplete="email">
+            </div>
+
+            <!-- Step 4: Password (hidden initially) -->
+            <div class="input-field" id="register-step-password" style="display: none;">
+                <div class="back-arrow">
+                    <i class="fas fa-arrow-left" id="register-password-back-arrow"></i>
+                </div>
+                <input type="password" name="register-password" placeholder="Passwort" required autocomplete="new-password">
+                <a href="#" style="display: none;" class="forgot-password">Forgot Password?</a>
+            </div>
+
+            <!-- Submit button changed to handle steps -->
+            <button type="button" class="cta-button" id="register-next-button">Weiter</button>
+            
+            <p class="login-link-text">Du hast schon einen Account? <a class="login-link" href="#" style="color: #386eff; text-decoration: none;">Hier anmelden</a>
+            </p>
+        </form>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // All your event listener code here
+        });
+
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            const email = this.email.value;
+            const password = this.password.value;
+
+            // Custom validation
+            if (!email || !password) {
+                return; // Do nothing if fields are empty
+            }
+
+            fetch('https://goldpluto.com/api/account/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Falsche E-Mail oder Passwort');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.clear_existing_sessions) {
+                    // Clear existing session IDs from local storage or cookies
+                    localStorage.removeItem('user_session_id');
+                    setCookie('user_session_id', '', -1); // Clear cookie
+                }
+                if (data.message === 'Login successful') {
+                    // Store the new session ID
+                    localStorage.setItem('user_session_id', data.session_id);
+                    setCookie('user_session_id', data.session_id, 7); // Store in cookie for 7 days
+                    window.location.href = 'https://goldpluto.com'; // Redirect to the main site on successful login
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error); // Handle error
+                // Clear previous error messages
+                clearErrorMessages(); // Add this line to clear previous messages
+                // Add error message and style
+                const passwordField = document.querySelector('input[name="password"]');
+                passwordField.classList.add('input-error');
+                let errorMessage = document.querySelector('.error-message');
+                if (!errorMessage) {
+                    errorMessage = document.createElement('p');
+                    errorMessage.className = 'error-message';
+                    errorMessage.textContent = error.message; // Use error.message to display the error
+                    passwordField.parentNode.insertBefore(errorMessage, passwordField.nextSibling);
+                }
+            });
+        });
+
+        // Function to focus on the first visible input field
+        function focusFirstVisibleInput() {
+            const inputs = document.querySelectorAll('.input-field input');
+            for (let input of inputs) {
+                if (input.offsetParent !== null) { // Checks if the element is visible
+                    input.focus();
+                    break;
+                }
+            }
+        }
+
+        // Focus on the first input field when the page loads
+        window.addEventListener('DOMContentLoaded', focusFirstVisibleInput);
+
+        function clearErrorMessages() {
+            const errorMessages = document.querySelectorAll('.error-message');
+            errorMessages.forEach(msg => msg.remove());
+        }
+
+        document.getElementById('next-button').addEventListener('click', function(event) {
+            clearErrorMessages(); // Clear existing error messages
+            const emailInput = document.querySelector('input[name="email"]');
+            const emailValue = emailInput.value;
+            const atIndex = emailValue.indexOf('@');
+            const dotIndex = emailValue.indexOf('.', atIndex + 1);
+
+            if (atIndex > 0 && dotIndex > atIndex + 4 && emailValue.length >= 7) {
+                // Check if email exists
+                fetch('https://goldpluto.com/api/account/checkemail', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: emailValue })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === 'Email is new') {
+                        let errorMessage = document.querySelector('.email-error-message');
+                        if (!errorMessage) {
+                            errorMessage = document.createElement('p');
+                            errorMessage.className = 'error-message email-error-message';
+                            emailInput.parentNode.insertBefore(errorMessage, emailInput.nextSibling);
+                        }
+                        errorMessage.textContent = "This email doesn't exist in the database";
+                    } else {
+                        document.getElementById('step-email').style.display = 'none';
+                        document.getElementById('step-password').style.display = 'block';
+                        this.textContent = 'Anmelden';
+                        this.type = 'submit';
+                        document.querySelector('.forgot-password').style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+            focusFirstVisibleInput();
+        });
+
+        document.querySelector('.create-account-button').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.querySelector('.login-container').style.display = 'none';
+            document.querySelector('.register-container').style.display = 'block';
+            focusFirstVisibleInput(); // Focus on the first visible input field
+        });
+
+        document.querySelector('.login-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.querySelector('.register-container').style.display = 'none';
+            document.querySelector('.login-container').style.display = 'block';
+            focusFirstVisibleInput(); // Focus on the first visible input field
+        });
+
+        document.getElementById('register-next-button').addEventListener('click', function(event) {
+            clearErrorMessages(); // Clear existing error messages
+            const currentStep = getRegisterCurrentStep();
+            
+            if (currentStep === 1) {
+                const firstName = document.querySelector('input[name="first_name"]').value;
+                const lastName = document.querySelector('input[name="last_name"]').value;
+                
+                if (/^(?=.*[a-zA-Z]).{3,}$/.test(firstName) && /^(?=.*[a-zA-Z]).{3,}$/.test(lastName)) {
+                    document.getElementById('register-step-first-name').style.display = 'none';
+                    document.getElementById('register-step-last-name').style.display = 'none';
+                    document.getElementById('register-step-email').style.display = 'block';
+                    this.textContent = 'Weiter';
+                }
+            } else if (currentStep === 2) { // Email validation (now step 2)
+                const emailInput = document.querySelector('input[name="register-email"]');
+                const emailValue = emailInput.value;
+                const atIndex = emailValue.indexOf('@');
+                const dotIndex = emailValue.indexOf('.', atIndex + 1);
+
+                if (atIndex > 0 && dotIndex > atIndex + 4 && emailValue.length >= 7) {
+                    // Check if email already exists
+                    fetch('https://goldpluto.com/api/account/checkemail', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email: emailValue })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.message === 'Email already exists') {
+                            let errorMessage = document.querySelector('.email-error-message');
+                            if (!errorMessage) {
+                                errorMessage = document.createElement('p');
+                                errorMessage.className = 'error-message email-error-message';
+                                emailInput.parentNode.insertBefore(errorMessage, emailInput.nextSibling);
+                            }
+                            errorMessage.textContent = 'E-Mail existiert bereits';
+                        } else {
+                            // Proceed to the password step
+                            document.getElementById('register-step-email').style.display = 'none';
+                            document.getElementById('register-step-password').style.display = 'block';
+                            this.textContent = 'Account erstellen';
+                            this.type = 'submit';
+                            document.querySelector('#register-form .forgot-password').style.display = 'none';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }
+                focusFirstVisibleInput();
+            }
+        });
+
+        function getRegisterCurrentStep() {
+            if (document.getElementById('register-step-first-name').style.display !== 'none' || 
+                document.getElementById('register-step-last-name').style.display !== 'none') {
+                return 1;
+            } else if (document.getElementById('register-step-email').style.display !== 'none') {
+                return 2;
+            }
+            return 3;
+        }
+        
+        // Add First Name and Last Name to Submit
+        document.getElementById('register-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const first_name = this['first_name'].value;
+            const last_name = this['last_name'].value;
+            const email = this['register-email'].value;
+            const password = this['register-password'].value;
+
+            // Custom validation
+            if (!first_name || !last_name || !email || !password) {
+                return;
+            }
+
+            fetch('https://goldpluto.com/api/account/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ first_name, last_name, email, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.clear_existing_sessions) {
+                    // Clear existing session IDs from local storage or cookies
+                    localStorage.removeItem('user_session_id');
+                    setCookie('user_session_id', '', -1); // Clear cookie
+                }
+                if (data.message === 'Account saved successfully!') {
+                    // Store the new session ID
+                    localStorage.setItem('user_session_id', data.session_id);
+                    setCookie('user_session_id', data.session_id, 7); // Store in cookie for 7 days
+                    window.location.href = 'https://goldpluto.com'; // Redirect to the main site on successful registration
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        // Back Arrow for Login Form Step Password
+        document.getElementById('login-back-arrow').addEventListener('click', function() {
+            document.getElementById('step-password').style.display = 'none';
+            document.getElementById('step-email').style.display = 'block';
+            document.getElementById('next-button').textContent = 'Weiter';
+            document.getElementById('next-button').type = 'button';
+            focusFirstVisibleInput();
+        });
+
+        // Back Arrow for Register Form Step Email
+        document.getElementById('register-back-arrow').addEventListener('click', function() {
+            document.getElementById('register-step-email').style.display = 'none';
+            document.getElementById('register-step-first-name').style.display = 'block';
+            document.getElementById('register-step-last-name').style.display = 'block';
+            document.getElementById('register-next-button').textContent = 'Weiter';
+            document.getElementById('register-next-button').type = 'button';
+            focusFirstVisibleInput();
+        });
+
+        // Back Arrow for Register Form Step Password
+        document.getElementById('register-password-back-arrow').addEventListener('click', function() {
+            document.getElementById('register-step-password').style.display = 'none';
+            document.getElementById('register-step-email').style.display = 'block';
+            document.getElementById('register-next-button').textContent = 'Weiter';
+            document.getElementById('register-next-button').type = 'button';
+            focusFirstVisibleInput();
+        });
+
+        // Add event listener for Enter key in login form
+        document.getElementById('login-form').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent default form submission
+                document.getElementById('next-button').click(); // Simulate button click
+            }
+        });
+
+        // Add event listener for Enter key in register form
+        document.getElementById('register-form').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent default form submission
+                document.getElementById('register-next-button').click(); // Simulate button click
+            }
+        });
+
+        // Function to set a cookie
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</body>
+</html> 

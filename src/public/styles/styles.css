@@ -1,0 +1,1039 @@
+/* Global Styles */
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    font-family: ui-sans-serif, -apple-system, system-ui, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+/* Search and File Listing */
+.search-container {
+    border: 0.7px solid #e5e7eb;
+    border-radius: 24px;
+    border-style: solid;
+    height: auto;
+    background-color: white;
+    overflow: hidden;
+}
+
+.search-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    background-color: #ffffff;
+}
+
+.file-names-container {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #d3d3d3 #f0f0f0;
+    margin: 16px 13px 8px 13px;
+    padding-bottom: 3px;
+}
+
+.file-name {
+    display: flex;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    padding: 2px 6px;
+    margin-right: 2px;
+    color: black;
+    flex: 0 1 auto;
+    white-space: nowrap;
+    border: 0.7px solid #ccc;
+    font-size: 11px;
+}
+
+/* Input and Button Groups */
+.input-button-group {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 2px;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.search-input {
+    background-color: #ffffff; /* Match with .search-form background */
+    margin: 8px 13px 0px 13px;
+    font-size: 17px;
+    font-family: ui-sans-serif, -apple-system, system-ui, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+    outline: none;
+    resize: none;
+    overflow: hidden;
+    height: auto;
+    width: calc(100% - 26px);
+    border: none;
+    line-height: 1.7em;
+}
+
+.search-input::placeholder {
+    color: #929292;
+    opacity: 1;
+}
+
+.upload-button {
+    margin-top: 0;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin-left: 13px;
+    margin-bottom: 15px;
+    background-color: transparent;
+    cursor: pointer;
+    display: flex;
+    border: none;
+}
+
+.search-button {
+    flex: none;
+    padding: 8.5px;
+    border: none;
+    border-radius: 50%;
+    background-color: #0d6efd;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 9px;
+    margin-bottom: 9px;
+}
+
+/* New style for when the button is in generating state */
+.search-button.generating {
+    opacity: 1; /* Set opacity to 1 */
+}
+
+/* New style for the square icon */
+.search-button.generating .search-icon {
+    width: 20px; /* Adjust size as needed */
+    height: 20px; /* Adjust size as needed */
+    background-color: white; /* Background color for the square */
+    border: 2px solid red; /* Border color to match generating state */
+    border-radius: 0; /* Make it a square */
+}
+
+.search-icon {
+    width: 20px;
+    height: 20px;
+    color: white;
+    margin: 0;
+}
+
+/* Tweet and Related Elements */
+.tweet {
+    margin: 0;
+    border: none;
+    border-radius: 7px;
+    background-color: white;
+    padding: 2px 5px 2px 5px;
+    position: relative;
+}
+
+.tweet-content {
+    white-space: pre-line;
+    line-height: 1.7em !important;
+    font-size: 17px;
+    padding-right: 5px;
+    border: none;
+    /* Ensure long continuous texts wrap within container */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.first {
+    margin-top: 5px;
+    border-radius: 7px !important;
+}
+
+.last {
+    margin-bottom: 30px;
+    border-radius: 7px !important;
+}
+
+.min-h-screen {
+    background-color: white;
+    padding-top: 2px;
+    padding-bottom: 10px;
+}
+
+.container {
+    margin: 0 auto;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 40px;
+}
+
+.search-wrapper {
+    background-color: transparent;
+}
+
+/* Media Queries for Responsive Layout */
+@media (min-width: 501px) and (max-width: 599px) {
+    .main-content {
+        width: 94% !important;
+    }
+}
+
+@media (max-width: 500px) {
+
+
+    .file-name {
+        font-size: 9px;
+    }
+
+    .tweet {
+        margin: 0;
+        border-left: 0 !important;
+        border-right: 0 !important;
+        border-radius: 0 !important;
+        border-top: none !important;
+        border-bottom: 0px solid #e5e7eb !important;
+    }
+
+    .first {
+        margin-top: 7px;
+        border-top: 0px solid #e5e7eb !important;
+    }
+
+    .first,
+    .last {
+        border-radius: 0 !important;
+    }
+
+    .container {
+        margin: auto;
+        padding: 0;
+    }
+
+    /* Remove border and background from mobile buttons */
+    .mobile-button {
+        border: none; /* Remove border */
+        background-color: transparent; /* Remove background color */
+    }
+
+    /* Add background color and border to the search input */
+    .search-input {
+        background-color: #f3f4f6; /* Match with .search-form background */
+        border: 0.7px solid #ccc; /* Add border */
+        padding: 8.5px 18px;
+        border-radius: 24px;
+        margin-top: 3px;
+        margin-left: 5px;
+        margin-right: 5px;
+        width: auto;
+        border: none;
+    }
+    .search-form {
+        background-color: white;
+        padding: 3px 2px 7px 2px;
+    }
+    .search-container {
+        border: none;
+        border-style: none;
+        margin: 0 0px;
+        border-radius: 0px;
+
+    }
+    .fixed-search-container {
+        padding-bottom: 4px !important;
+    }
+    .input-button-group {
+        margin-top: 7.5px !important;
+        margin-bottom: 5px !important;
+    }
+    .search-button {
+        margin-bottom: 0px !important;
+        height: 35px !important;
+        width: 35px !important;
+        padding: 9.8px !important;
+        margin-right: 5px !important;
+    }
+    .search-icon {
+        height: 30px !important;
+        width: 30px !important;
+    }
+    .upload-button {
+        margin-bottom: 0px !important;
+        margin-left: 5px !important;
+    }
+    .e98de67b {
+        margin-bottom: 0px !important;
+    }
+}
+
+
+
+.fixed-search-container {
+    padding-bottom: 7px;
+}
+/* Extra Spacing */
+.empty {
+    padding: 8.5px;
+}
+
+.tweet-time {
+    font-size: 12px; /* Adjust size as needed */
+    color: gray;
+    margin-top: 4px;
+}
+
+/* Sidebar */
+.sidebar {
+    display: none; /* Hidden by default */
+    background-color: #ffffff;
+    top: 0;
+    left: 0;
+    overflow-y: hidden; /* Prevent the sidebar from scrolling by default */
+    scrollbar-width: none; /* Firefox */
+    padding-left: 5px;
+    padding-right: 5px;
+    width: auto !important;
+}
+
+.sidebar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* Allow scrolling when the mouse is over the sidebar */
+.sidebar:hover {
+    overflow-y: auto;
+}
+
+@media (min-width: 600px) {
+    .sidebar {
+        display: block;
+        padding-left: 7px;
+        padding-right: 7px;
+    }
+    /* When the sidebar has the "collapsed" class, slide it out of view */
+    .sidebar.collapsed {
+        transform: translateX(-100%);
+    }
+}
+
+@media (min-width: 600px) and (max-width: 800px) {
+    .sidebar {
+        width: 10%;
+        padding-left: 7px;
+        padding-right: 7px;
+    }
+    .sidebar-button {
+        font-size: 16px;
+    }
+    .main-content {
+        width: 95%;
+    }
+}
+
+@media (min-width: 801px) and (max-width: 1000px) {
+    .sidebar {
+        width: 21%;
+        padding-left: 7px;
+        padding-right: 7px;
+    }
+    .sidebar-button {
+        font-size: 17px;
+    }
+    .main-content {
+        width: 70%;
+    }
+}
+
+@media (min-width: 1001px) and (max-width: 1200px) {
+    .sidebar {
+        width: 21%;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    .sidebar-button {
+        font-size: 18px;
+    }
+    .main-content {
+        width: 60%;
+    }
+}
+
+@media (min-width: 1201px) and (max-width: 1400px) {
+    .sidebar {
+        width: 21%;
+        padding-left: 9px;
+        padding-right: 9px;
+    }
+    .sidebar-button {
+        font-size: 19px;
+    }
+    .main-content {
+        width: 52%;
+    }
+}
+
+@media (min-width: 1401px) and (max-width: 1600px) {
+    .sidebar {
+        width: 21%;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .sidebar-button {
+        font-size: 20px;
+    }
+    .main-content {
+        width: 46%;
+    }
+}
+
+@media (min-width: 1601px) and (max-width: 1800px) {
+    .sidebar {
+        width: 21%;
+        padding-left: 11px;
+        padding-right: 11px;
+    }
+    .sidebar-button {
+        font-size: 21px;
+    }
+    .main-content {
+        width: 43%;
+    }
+}
+
+@media (min-width: 1801px) {
+    .sidebar {
+        width: 21%;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+    .sidebar-button {
+        font-size: 22px;
+    }
+    .main-content {
+        width: 38%;
+        max-width: 1000px;
+    }
+}
+
+/* Chat Button */
+.chat-button {
+    border: none;
+    background-color: transparent;
+    display: block;
+    width: 100%;
+    margin-bottom: 8px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 18px;
+}
+
+/* Utility Classes */
+.h-10.rounded-lg.px-2.text-token-text-secondary {
+    cursor: pointer;
+}
+
+.x1k90msu { transition-duration: var(--fds-fast); }
+.x1lliihq { display: block; }
+.x1qfuztq { transition-timing-function: var(--fds-soft); }
+.x1tzjh5l { forced-color-adjust: auto; }
+.x2h7rmj { transition-property: color, fill, stroke; }
+.xfx01vb { color: var(--color); }
+svg { forced-color-adjust: auto; }
+
+/* User Info Section */
+#user-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white;
+    margin-right: 15px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 500px) {
+    #user-info {
+        display: none;
+    }
+}
+
+#logout {
+    font-size: 12px;
+    color: black;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 5px;
+}
+
+#user-info {
+    position: relative;
+    font-size: 16px;
+    color: black;
+    justify-items: right;
+    display: flex;
+    align-items: center;
+}
+
+#user-full-name {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 1000;
+    text-align: left;
+    color: black;
+    right: 10px;
+}
+
+#login-text {
+    position: relative;
+    top: auto;
+    right: auto;
+    font-size: 17px;
+    color: black;
+    display: none;
+    z-index: 1000;
+    margin: 15px 15px 15px 0px;
+}
+
+@media (max-width: 800px) {
+    #login-text {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 500px) {
+    #login-text {
+        font-size: 15px;
+    }
+}
+
+.navigation {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.tweet-icon {
+    width: 17px;
+    height: 17px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    fill: currentColor;
+    color: #444444;
+}
+
+/* Sidebar Icons and Buttons */
+.sidebar-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    fill: currentColor;
+    color: #1b1b1b;
+}
+
+.sidebar-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    font-size: 18px;
+    font-weight: 400;
+    color: rgb(46, 46, 46);
+}
+
+@media (max-width: 600px) {
+    /* Hide text in sidebar buttons, but not the icons */
+    .sidebar-button span:not(.sidebar-icon) {
+        display: none;
+    }
+    .sidebar-button {
+        justify-content: left;
+    }
+    .sidebar {
+        padding-left: 0px;
+        padding-right: 0px;
+        display: none !important;
+    }
+}
+
+/* Settings Button */
+#settings-button {
+    display: none;
+}
+
+#settings-button.visible {
+    display: flex;
+}
+
+/* Mobile Navigation */
+@media (min-width: 600px) {
+    .mobile-bottom-nav {
+        display: none;
+    }
+    .mobile-top-nav {
+        display: none;
+    }
+}
+
+/* Mobile Navigation Containers */
+@media (max-width: 599px) {
+    .container {
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-bottom: 40px;
+    }
+    
+    .mobile-top-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 15px;
+        background-color: white;
+        border-bottom: 1px solid #e5e7eb;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1001;
+    }
+
+    .mobile-bottom-nav {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 5px 0;
+        background-color: white;
+        border-top: 1px solid #e5e7eb;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1001;
+    }
+
+    /* Hide desktop sidebar */
+    .sidebar {
+        display: none;
+    }
+
+    /* Mobile Button Styles */
+    .mobile-button {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 5px 0;
+        text-decoration: none;
+        color: black;
+        font-size: 12px;
+    }
+
+    .mobile-button span {
+        margin-top: 4px;
+    }
+
+    /* Center the Create button */
+    .mobile-create-button {
+        background-color: transparent;
+        border-radius: 50%;
+        padding: 5px;
+        box-shadow: none;
+    }
+
+    /* Mobile Icon Styles */
+    .mobile-icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    /* Ensure main content is not hidden behind the fixed navs */
+    .main-content {
+        padding-top: 60px;
+        padding-bottom: 60px;
+        width: 98%;
+    }
+}
+
+/* Remove border and background from mobile buttons */
+.mobile-button {
+    border: none;
+    background-color: transparent;
+}
+
+/* Align Hamburger Menu */
+.hamburger-menu {
+    margin-left: 0;
+    flex: none;
+}
+
+/* Stack icon above text in mobile-bottom-nav */
+.mobile-bottom-nav .mobile-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-bottom-nav .mobile-button span {
+    text-align: center;
+    margin-top: 4px;
+    font-size: 9px;
+    word-wrap: break-word;
+}
+
+/* Close icon container styles (moved from inline) */
+.close-icon {
+    position: absolute;
+    right: 6px;
+    top: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 24px;
+    gap: 8px;
+}
+
+/* Utility class for pointer cursor (to be added on clickable SVGs) */
+.cursor-pointer {
+    cursor: pointer;
+}
+
+
+/* Scroll Down Button Styles */
+.e98de67b {
+    pointer-events: all;
+    color: #262626;
+    cursor: pointer;
+    background-color: #fff;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    margin-bottom: 10px;
+    display: flex;
+    position: absolute;
+    bottom: 100%;
+    right: 12px;
+    overflow: hidden;
+    box-shadow: inset 0 0 0 1px #ededed;
+}
+
+/* Added to ensure the tweet input has the same line height as user text */
+.tweet-input {
+    line-height: 1.7em;
+    background-color: #f4f4f4; /* Set background color for user messages */
+
+}
+
+@media (min-width: 600px) {
+    #chat-overlay {
+        display: none !important;
+    }
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow-y: auto;
+}
+
+/* Style for the mobile chat name display in the mobile top navigation */
+.mobile-chat-name {
+    flex: 1;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: black;
+}
+
+/* Toggle sidebar: hide all content except those in the header */
+.sidebar.collapsed #sidebar-content,
+.sidebar.collapsed #chat-buttons-container {
+  display: none;
+}
+
+/* For devices above 600px: show the desktop header and hide the mobile header */
+@media (min-width: 600px) {
+  .desktop-header-controls {
+    display: flex;
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color:white;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .mobile-header-controls {
+    display: none;
+  }
+}
+
+/* For devices below 600px: show the mobile header inside the sidebar */
+@media (max-width: 599px) {
+  .desktop-header-controls {
+    display: none;
+  }
+  .mobile-header-controls {
+    display: flex;
+    /* optional: adjust alignment to blend in with your sidebar content */
+  }
+}
+
+/* New container for the sidebar and main-content */
+.layout {
+    display: flex;
+    height: 100%;
+}
+
+/* Update Sidebar: remove absolute positioning so that it occupies its natural space */
+.sidebar {
+    flex: 0 0 auto; /* Allow the sidebar to take its content width */
+    overflow-y: auto; /* Allow internal scrolling */
+}
+
+/* Center the main content */
+.main-content {
+    flex: 1;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+
+/* New container for main column (holds navigation and main content) */
+.main-column {
+    flex: 1; /* Allow the main column to take the remaining space */
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+/* Ensure the new chat icon is pushed to the very right in the sidebar */
+.new-chat-button {
+    margin: 0 !important; /* Remove margin from the new chat button */
+    padding: 0 !important; /* Remove padding from the new chat button */
+    /* Optional: Adjust width or height if necessary */
+    width: auto; /* Ensure the button width is auto */
+    height: auto; /* Ensure the button height is auto */
+}
+
+.desktop-header-controls .new-chat-button {
+    margin-left: auto !important;
+    /* Optional: Remove any right margin if needed */
+    margin-right: 0;
+}
+
+/* Show edit icon on hover for user input tweets */
+.tweet-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    max-width: 80%;
+    margin-left: auto;
+    justify-content: flex-end;
+}
+
+.tweet-input-container .edit-icon {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.tweet-input-container:hover .edit-icon {
+    opacity: 1;
+}
+
+/* Update the editing container and buttons layout */
+.tweet-input-container.editing {
+    max-width: 100%;
+    width: 100%;
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(244, 244, 244);
+    border-radius: 14px;
+}
+
+.tweet-input-container.editing textarea {
+    width: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    border: none;
+    background-color: #f4f4f4;
+    padding: 5px 18px;
+    font-size: 17px;
+    line-height: 1.7em;
+    border-radius: 14px;
+}
+
+.tweet-input-container.editing div {
+    align-self: flex-end;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;  /* Add 5px gap between Cancel and Save buttons */
+
+}
+
+.tweet-input-container.editing textarea:focus {
+    outline: none; /* Remove the default focus outline */
+    border: none; /* Remove any border */
+}
+
+/* Copy icon visibility */
+.tweet-input-container:hover ~ .tweet-content .copy-icon {
+    opacity: 0;
+}
+
+
+.copy-icon:hover {
+    opacity: 1;
+} 
+
+@media (max-width: 599px) {
+    .mobile-bottom-nav {
+        display: flex !important;
+        justify-content: space-around;
+        align-items: center;
+        padding: 5px 0;
+        background-color: white;
+        border-top: 1px solid #e5e7eb;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1001;
+    }
+    /* Hide the fixed. search container on mobile by default */
+    .fixed-search-container {
+        display: none;
+    }
+}
+/* Define a state where the mobile search container is active */
+.fixed-search-container.active {
+    display: block !important;
+}
+
+/* Hide the mobile bottom nav when search is active */
+.mobile-bottom-nav.hidden {
+    display: none !important;
+}
+
+/* Show the back arrow when active */
+#mobile-back-arrow.active {
+    display: block !important;
+}
+
+@media (max-width: 599px) {
+    .main-content {
+        padding-top: 30px; /* Height of top nav */
+        padding-bottom: 30px; /* Height of bottom nav */
+    }
+}
+/* Target specific elements */
+button:focus,
+input:focus,
+textarea:focus,
+a:focus {
+  outline: none;
+}
+/* Remove tap highlight on WebKit-based browsers */
+a, button, input, textarea {
+    -webkit-tap-highlight-color: transparent;
+  }
+  svg {
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer; /* Only if the SVG is interactive */
+  }
+  
+  svg:focus {
+    outline: none;
+  }
+  
+/* For tweets that are not the newest (i.e. without the .last class),
+   hide the icon container by default and show it on hovering over the tweet-content */
+.tweet:not(.last) .tweet-content .copy-icon {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.tweet:not(.last) .tweet-content:hover .copy-icon {
+  opacity: 0.7;
+}
+
+/* For the newest (last) tweet, always show the icons */
+.tweet.last .copy-icon {
+  opacity: 0.7 !important;
+}
+
+/* Add these new styles */
+.tweet-input-wrapper {
+    width: 100%;
+    position: relative;
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    justify-content: flex-end;
+}
+
+.tweet-input-wrapper:hover .edit-icon {
+    opacity: 1;
+}
+
+.edit-icon {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    margin-right: 8px !important;
+}
+
+.version-navigation svg {
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.version-navigation svg:hover {
+  opacity: 1;
+}
+
+.tweet-input-wrapper {
+  width: 100%;
+  position: relative;
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.tweet-input-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  max-width: 80%;
+  margin-left: auto;
+} 
