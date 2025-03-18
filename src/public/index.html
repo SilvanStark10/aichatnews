@@ -14,68 +14,6 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Expires" content="0">
     <meta http-equiv="Pragma" content="no-cache">
-    <style>
-        @media (max-width: 599px) {
-            .mobile-bottom-nav {
-                display: none !important;
-                justify-content: space-around;
-                align-items: center;
-                padding: 5px 0;
-                background-color: white;
-                border-top: 1px solid #e5e7eb;
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                z-index: 1001;
-            }
-            /* Show the fixed search container on mobile by default */
-            .fixed-search-container {
-                display: block;
-            }
-            
-            /* Hide discover icon, notification icon and login button on mobile */
-            .mobile-top-nav .icon-discover,
-            .mobile-top-nav .icon-notifications {
-                display: none;
-            }
-            
-            #login-text {
-                display: none !important;
-            }
-        }
-        /* Define a state where the mobile search container is active */
-        .fixed-search-container.active {
-            display: block !important;
-        }
-        
-        /* Hide the mobile bottom nav when search is active */
-        .mobile-bottom-nav.hidden {
-            display: none !important;
-        }
-        
-        /* Show the back arrow when active */
-        #mobile-back-arrow.active {
-            display: block !important;
-        }
-        /* Add these styles to ensure More button stays at the bottom */
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
-        #chat-buttons-container {
-            flex: 1;
-        }
-        #more-button-container {
-            margin-top: auto;
-        }
-        
-        /* Rotate the More icon by 90 degrees */
-        .icon-more {
-            transform: rotate(90deg);
-        }
-    </style>
 
     <!-- Preload tweets early -->
     <script>
@@ -321,15 +259,6 @@
         </a>
     </div>
 
-    <!-- Adjust main content padding for mobile fixed navs -->
-    <style>
-        @media (max-width: 599px) {
-            .main-content {
-                padding-top: 55px; /* Increased from 30px to 55px */
-                padding-bottom: 30px; /* Height of bottom nav */
-            }
-        }
-    </style>
 
     <!-- Modified Chat Overlay: set top to 50px, width to 80%, and height to fill below nav -->
     <div id="chat-overlay" style="display: none; position: fixed; top: 45px; left: 0; width: 80%; height: calc(100% - 50px); background-color: white; z-index: 9999; overflow-y: auto;">

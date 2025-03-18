@@ -121,6 +121,7 @@ export function infinitefeed() {
   }, [tweets]);
 
   const loadTweets = (chatId) => {
+    if (!chatId || chatId === "null") return;
     fetchUserIPAddresses()
       .then(({ userIpV4, userIpV6 }) => {
         const sessionId = getCookie("user_session_id");

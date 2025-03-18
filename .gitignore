@@ -12,8 +12,8 @@ id_rsa*
 chatgpt.py
 
 # Custom project folders
-/start/
-start/
+/updater/
+updater/
 
 # Node modules
 node_modules/

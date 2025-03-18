@@ -23,7 +23,7 @@ openai_client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 # Keep Groq client for backward compatibility if needed
 client = Client(api_key=os.getenv('GROQ_API_KEY'))
 
-# MySQL database configuration
+# MySQL database configuration.
 db_config = {
     'user': os.getenv('DB_USER'),
     'password': os.getenv('DB_PASSWORD'),
@@ -191,8 +191,8 @@ def print_number():
 
 
 def main():
-    test_message = "This is a test message"
-    print(generate_response(test_message))
+    # Remove the test message code
+    print("Application initializing...")
 
 
 def get_user_id_from_session(session_id):
@@ -293,12 +293,11 @@ def build_conversation_prompt(chat_id, new_user_message, user_session_id, cookie
 # -------------------------------------------------------
 import requestposts
 import chatids
-import message
-import tweets
-import tweets2
+import newpost
+import editpost
 import tweetsreverse
-# Initialize routes from message.py
-message.init_routes(app)
+# Initialize routes from newpost.py
+newpost.init_routes(app)
 
 # -------------------------------------------------------
 # Final run logic remains the same
