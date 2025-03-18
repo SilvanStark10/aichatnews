@@ -141,7 +141,7 @@ input {
 .back-arrow i {
     cursor: pointer;
     font-size: 20px; /* Adjust size as needed */
-    color: #666; /* Adjust color as needed */
+    color: #666; /* Adjust color as needed. */
 }
 .forgot-password-link-container {
     margin: 13px 0;
